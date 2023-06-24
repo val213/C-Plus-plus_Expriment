@@ -7,7 +7,8 @@
 #include"library.h"
 using namespace std;
 
-Library::Library(Catelogue catelogue1, borrower* borrower1, BookRecord* bookrecord1) 
+// Library类的构造函数
+Library::Library(Catelogue catelogue1, borrower* borrower1, BookRecord* bookrecord1)
 	: catalogue(catelogue1), array_of_borrowers(borrower1)
 {
 	int number_of_book_records_to_follow;
@@ -59,7 +60,6 @@ Library::Library(Catelogue catelogue1, borrower* borrower1, BookRecord* bookreco
 
 		// 如果书籍ID不以大写字母开头，则输出错误信息并退出程序
 		if (!isupper(book_id[0])) {
-
 			cout << "Error: book ID should start with uppercase letter." << endl;
 			exit(1);
 		}
@@ -69,10 +69,11 @@ Library::Library(Catelogue catelogue1, borrower* borrower1, BookRecord* bookreco
 			cout << year_published << "Error: publish year should be 4-digit number starting with 1 or 2." << endl;
 			exit(1);
 		}
+		// 创建BookRecord对象并存储到BOOKarr数组中
 		BookRecord bookrecrdi(book_id, book_title, author_first_name, author_last_name, year_published, number_of_copies, number_of_books_loaned);
 		BOOKarr[i] = bookrecrdi;
 	}
-	
+
 	cin >> number_of_borrower_records_to_follow;
 	cin.ignore();
 
@@ -104,7 +105,7 @@ Library::Library(Catelogue catelogue1, borrower* borrower1, BookRecord* bookreco
 		getline(ss, last_name, ';');
 		ss >> number_of_books_loaned;
 		ss.ignore(1, ';');
-		
+
 		total_number_of_books_on_loan += number_of_books_loaned;
 		if (borrower_id.length() != 5 || !isdigit(borrower_id[0]) || !isdigit(borrower_id[1])
 			|| !isdigit(borrower_id[2]) || !isdigit(borrower_id[3]) || !isdigit(borrower_id[4])) {
@@ -114,7 +115,6 @@ Library::Library(Catelogue catelogue1, borrower* borrower1, BookRecord* bookreco
 		for (int k = 0; k < number_of_books_loaned; k++)
 		{
 			getline(ss, array_of_book_ids[k], ';');
-
 		}
 		if (array_of_book_ids == nullptr)
 		{
@@ -122,8 +122,8 @@ Library::Library(Catelogue catelogue1, borrower* borrower1, BookRecord* bookreco
 			exit(1);
 		}
 		//
-		borrower borrowerj(borrower_id,first_name,last_name,number_of_books_loaned,array_of_book_ids);
-		BORROWERarr[j] = borrowerj;	
+		borrower borrowerj(borrower_id, first_name, last_name, number_of_books_loaned, array_of_book_ids);
+		BORROWERarr[j] = borrowerj;
 		//遍历每个借书记录中借的每一本书，如果和图书馆中的书一样，则该书的借出数量实时更新
 		for (int k = 0; k < number_of_books_loaned; k++)
 		{
@@ -132,16 +132,14 @@ Library::Library(Catelogue catelogue1, borrower* borrower1, BookRecord* bookreco
 				if (BOOKarr[kk].get_book_id() == array_of_book_ids[k])
 				{
 					BOOKarr[kk].number_of_loaned++;
-
 				}
 			}
 		}
 		total_number_of_borrowers = number_of_borrower_records_to_follow;
 	}
-	
 
 	catelogue1 = Catelogue(BOOKarr);
-	cout << "Total number of books on loan: " <<get_total_number_of_books_on_loan() << endl;
+	cout << "Total number of books on loan: " << get_total_number_of_books_on_loan() << endl;
 	catelogue1.total_number_of_book_records = number_of_book_records_to_follow;
 	cout << "Total number of books in catalogue: " << catelogue1.get_total_number_of_book_records() << endl;
 	cout << endl;
@@ -157,7 +155,7 @@ Library::Library(Catelogue catelogue1, borrower* borrower1, BookRecord* bookreco
 	{
 		cout << "Borrower " << i << endl;
 		cout << "==========" << endl;
-		outputborrower(number_of_borrower_records_to_follow,BORROWERarr[i]);
+		outputborrower(number_of_borrower_records_to_follow, BORROWERarr[i]);
 	}
 	//new完之后delete手动释放内存
 	delete[]BOOKarr;
@@ -193,12 +191,7 @@ borrower* Library::get_array_of_borrowers()
 	return array_of_borrowers;
 }
 
-
-
-
-
-
-borrower::borrower(string borrower_id, string first_name,string last_name, int number_of_books_loaned, string* array_of_book_ids)
+borrower::borrower(string borrower_id, string first_name, string last_name, int number_of_books_loaned, string* array_of_book_ids)
 	:borrower_id(borrower_id), first_name(first_name), last_name(last_name), number_of_books_loaned(number_of_books_loaned)
 {
 	//必须在构造函数中把Library对象的array_of_book_ids作为参数传给borrower对象的array_of_book_ids
@@ -211,9 +204,8 @@ borrower::~borrower()
 {
 }
 borrower::borrower()
-	:borrower_id(" "), first_name(" "),last_name (" "),number_of_books_loaned(0),array_of_book_ids()
+	:borrower_id(" "), first_name(" "), last_name(" "), number_of_books_loaned(0), array_of_book_ids()
 {
-
 }
 string borrower::get_borrower_id()
 {
@@ -236,6 +228,7 @@ string borrower::get_array_of_book_ids()
 	return *array_of_book_ids;
 }
 
+
 void borrower::displaydata_borrower()
 {
 	cout << "Borrower ID: " << borrower_id << endl;
@@ -245,19 +238,17 @@ void borrower::displaydata_borrower()
 	cout << "Book IDs on loan: ";
 	for (int k = 0; k < number_of_books_loaned; k++)
 	{
-		cout << array_of_book_ids[k]<< " ";
+		cout << array_of_book_ids[k] << " ";
 	}
 	cout << endl;
 }
 
-
 BookRecord::BookRecord()
 	:book_id(" "), book_title(" "), author_first_name(" "), author_last_name(" "), year_published(" "), number_of_copies(0), number_of_loaned(0), number_of_copies_available_for_loan(0)
 {}
-BookRecord::BookRecord(string book_id,string book_title,string first_name,string last_name,string year_published,int number_of_copies,int number_of_loaned) 
-	:book_id(book_id), book_title(book_title), author_first_name(first_name), author_last_name(last_name), year_published(year_published), number_of_copies(number_of_copies), number_of_loaned(number_of_loaned), number_of_copies_available_for_loan(number_of_copies- number_of_loaned)
+BookRecord::BookRecord(string book_id, string book_title, string first_name, string last_name, string year_published, int number_of_copies, int number_of_loaned)
+	:book_id(book_id), book_title(book_title), author_first_name(first_name), author_last_name(last_name), year_published(year_published), number_of_copies(number_of_copies), number_of_loaned(number_of_loaned), number_of_copies_available_for_loan(number_of_copies - number_of_loaned)
 {
-
 }
 BookRecord::~BookRecord()
 {
@@ -284,13 +275,12 @@ string BookRecord::get_year_published()
 }
 void BookRecord::displaydata_bookrecord()
 {
-	
 	cout << "Book ID: " << book_id << endl;
 	cout << "Book Title: " << book_title << endl;
-	cout << "Author: " <<author_first_name << " " << author_last_name << endl;
+	cout << "Author: " << author_first_name << " " << author_last_name << endl;
 	cout << "Year Published: " << year_published << endl;
 	cout << "Number of Copies: " << number_of_copies << endl;
-	cout << "Number of Copies Available for Loan: " << get_number_of_copies_available_for_loan ()<< endl;
+	cout << "Number of Copies Available for Loan: " << get_number_of_copies_available_for_loan() << endl;
 	cout << endl;
 }
 int BookRecord::get_number_of_copies()
@@ -303,21 +293,18 @@ int BookRecord::get_number_of_loaned()
 }
 int BookRecord::get_number_of_copies_available_for_loan()
 {
-	return number_of_copies-number_of_loaned;
+	return number_of_copies - number_of_loaned;
 }
-
-
 
 Catelogue::Catelogue()
 {
 }
 
-Catelogue::Catelogue(BookRecord* bookrecord):total_number_of_book_records(0),array_of_book_records(bookrecord)
+Catelogue::Catelogue(BookRecord* bookrecord) :total_number_of_book_records(0), array_of_book_records(bookrecord)
 {
 }
 Catelogue::~Catelogue()
 {
-	
 }
 int Catelogue::get_total_number_of_book_records()
 {
@@ -327,12 +314,11 @@ BookRecord* Catelogue::get_array_of_book_records()
 {
 	return array_of_book_records;
 }
-void Library::outputborrower(int number_of_borrower_records_to_follow,borrower borrower1)
+void Library::outputborrower(int number_of_borrower_records_to_follow, borrower borrower1)
 {
-		borrower1.displaydata_borrower();
+	borrower1.displaydata_borrower();
 }
-void Library::outputbookrecord(int number_of_book_records_to_follow,BookRecord bookrecord1)
+void Library::outputbookrecord(int number_of_book_records_to_follow, BookRecord bookrecord1)
 {
-		bookrecord1.displaydata_bookrecord();
+	bookrecord1.displaydata_bookrecord();
 }
-

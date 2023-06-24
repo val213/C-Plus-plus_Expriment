@@ -11,10 +11,10 @@ using namespace std;
 
 int main()
 {
-	Catelogue catelogue1=NULL;
-	borrower* borrower1=nullptr;
-	BookRecord* bookrecord1=nullptr;
-	Library library(catelogue1,borrower1,bookrecord1);
+	Catelogue catelogue1 = NULL;
+	borrower* borrower1 = nullptr;
+	BookRecord* bookrecord1 = nullptr;
+	Library library(catelogue1, borrower1, bookrecord1);
 }
 /*
 write a main() function that displays the total number of books on loan, the total number of books in the catalogue, the individual book records, the total number of borrowers and the individual borrower records. An example output, given the provided input is as follows:

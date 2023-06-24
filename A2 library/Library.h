@@ -10,10 +10,9 @@ class BookRecord
 {
 public:
 	BookRecord();
-	BookRecord(string,string,string,string,string,int,int);
+	BookRecord(string, string, string, string, string, int, int);
 	~BookRecord();
 
-	
 	string get_book_id();
 	string get_book_title();
 	string get_first_name();
@@ -23,24 +22,24 @@ public:
 	int get_number_of_copies();
 	int get_number_of_copies_available_for_loan();
 	int get_number_of_loaned();
-	int number_of_loaned=0;
+	int number_of_loaned = 0;
 private:
 	string book_id = " ";
 	string book_title = " ";
 	string author_first_name = " ";
 	string author_last_name = " ";
-	string year_published=" ";
+	string year_published = " ";
 	int number_of_copies;
 	int number_of_copies_available_for_loan;
 };
 
 class borrower
 {
-	public:
-	borrower(string,string ,string ,int, string*);
+public:
+	borrower(string, string, string, int, string*);
 	borrower();
 	~borrower();
-	
+
 	string get_borrower_id();
 	string get_first_name();
 	string get_last_name();
@@ -48,44 +47,39 @@ class borrower
 	string get_array_of_book_ids();
 	void displaydata_borrower();
 private:
-	
+
 	string borrower_id = " ";
 	string first_name = " ";
 	string last_name = " ";
-	int number_of_books_loaned=0;
-	string array_of_book_ids[100] = {"666"};
-
+	int number_of_books_loaned = 0;
+	string array_of_book_ids[100] = { "666" };
 };
-
 
 class Catelogue
 {
-
 public:
 	Catelogue();
 	Catelogue(BookRecord*);
 	~Catelogue();
 	int get_total_number_of_book_records();//yes
 	BookRecord* get_array_of_book_records();
-	int total_number_of_book_records=10;//yes
-	
-private:
-	BookRecord *array_of_book_records=new BookRecord[100];//yes//在堆上创建解决了在cpp文件中“表达式必须是可修改的左值问题”
+	int total_number_of_book_records = 10;//yes
 
+private:
+	BookRecord* array_of_book_records = new BookRecord[100];//yes//在堆上创建解决了在cpp文件中“表达式必须是可修改的左值问题”
 };
 
 class Library
 {
-
 public:
-	Library(Catelogue, borrower*,BookRecord*);//yes
+	Library(Catelogue, borrower*, BookRecord*);//yes
 	~Library();//yes
 	int get_total_number_of_books_on_loan();
 	int get_total_number_of_borrowers();
 	Catelogue get_catalogue();
 	borrower* get_array_of_borrowers();
-	void outputbookrecord(int,BookRecord);
-	void outputborrower(int,borrower);
+	void outputbookrecord(int, BookRecord);
+	void outputborrower(int, borrower);
 private:
 	void set_catalogue(Catelogue);
 	void set_array_of_borrowers(borrower*);
@@ -97,17 +91,16 @@ private:
 	int number_of_copies;
 	int number_of_loaned;
 	int number_of_copies_available_for_loan = number_of_copies;
-	int total_number_of_books_on_loan=0;//yes
-	int total_number_of_borrowers=0;//yes
+	int total_number_of_books_on_loan = 0;//yes
+	int total_number_of_borrowers = 0;//yes
 
 	string borrower_id = " ";
 	string first_name = " ";
 	string last_name = " ";
 	int number_of_books_loaned = 0;
-	string array_of_book_ids[100] = {"777"};
+	string array_of_book_ids[100] = { "777" };
 	Catelogue catalogue;//yes
 	borrower* array_of_borrowers = new borrower[100];//yes//在堆上创建解决了在cpp文件中“表达式必须是可修改的左值问题”
-
 };
 #endif
 /*
